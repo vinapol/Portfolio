@@ -1,0 +1,263 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.wrap {
+  position: relative;
+  width: 100%;
+  max-width: $wrap-max;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.text-frame {
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  padding: 1.5rem 1.75rem;
+  box-shadow: $shadow-subtle;
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: $radius-sm;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &--primary {
+    border-color: $color-accent;
+    background: $color-accent;
+    color: $color-white;
+    box-shadow: $shadow-btn;
+
+    &:hover {
+      border-color: $color-accent-hover;
+      background: $color-accent-hover;
+      transform: translateY(-1px);
+    }
+  }
+
+  &--secondary {
+    border-color: $color-border;
+    background: $color-surface;
+    color: $color-ink;
+
+    &:hover {
+      border-color: $color-ink-subtle;
+      background: $color-subtle;
+    }
+  }
+
+  &--ghost {
+    border-color: transparent;
+    background: transparent;
+    color: $color-ink-subtle;
+
+    &:hover {
+      background: $color-subtle;
+      color: $color-ink;
+    }
+  }
+
+  &--icon {
+    min-height: 40px;
+    padding: 0.375rem 0.875rem;
+    font-size: 0.8rem;
+
+    @include mq(lg) {
+      display: none;
+    }
+  }
+
+  &--copy {
+    min-height: 36px;
+    padding: 0.375rem 0.75rem;
+    font-family: $font-mono;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  &--submit {
+    border-color: $color-ink;
+    font-weight: 600;
+  }
+
+  &--modal {
+    min-height: 36px;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+.chip {
+  display: inline-block;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  background: $color-subtle;
+  padding: 0.125rem 0.5rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  color: $color-ink-subtle;
+}
+
+.section-header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $color-border;
+
+  @include mq(sm) {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  &--plain {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0;
+    border-bottom: 0;
+    gap: 0.5rem;
+  }
+
+  &__title {
+    font-family: $font-display;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: $color-ink;
+  }
+}
+
+.crop-marks {
+  pointer-events: none;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: $color-border;
+  opacity: 0.6;
+
+  &--tl {
+    top: 12px;
+    left: 12px;
+    border-top: 1.5px solid $color-border;
+    border-left: 1.5px solid $color-border;
+  }
+
+  &--tr {
+    top: 12px;
+    right: 12px;
+    border-top: 1.5px solid $color-border;
+    border-right: 1.5px solid $color-border;
+  }
+
+  &--bl {
+    bottom: 12px;
+    left: 12px;
+    border-bottom: 1.5px solid $color-border;
+    border-left: 1.5px solid $color-border;
+  }
+
+  &--br {
+    right: 12px;
+    bottom: 12px;
+    border-right: 1.5px solid $color-border;
+    border-bottom: 1.5px solid $color-border;
+  }
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  &__btn {
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    background: $color-surface;
+    padding: 0.375rem 0.75rem;
+    font-family: $font-mono;
+    font-size: 0.76rem;
+    color: $color-ink-subtle;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+
+    &:hover {
+      border-color: $color-ink-subtle;
+      color: $color-ink;
+    }
+
+    &.is-active {
+      border-color: $color-ink;
+      background: $color-ink;
+      color: $color-surface;
+    }
+  }
+}
+
+.email-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  background: $color-subtle;
+  padding: 0.75rem 1rem;
+
+  &__label {
+    font-family: $font-mono;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $color-muted;
+  }
+
+  &__value {
+    font-family: $font-mono;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: $color-ink;
+  }
+}
+
+.toast {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: $radius-sm;
+  background: $color-ink;
+  padding: 0.625rem 1rem;
+  font-family: $font-mono;
+  font-size: 0.8rem;
+  color: $color-surface;
+  box-shadow: $shadow-card;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+
+  &.is-hidden {
+    pointer-events: none;
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+

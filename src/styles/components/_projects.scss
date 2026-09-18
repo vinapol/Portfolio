@@ -1,0 +1,325 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.projects {
+  margin-bottom: 6rem;
+  padding-top: 1.5rem;
+
+  &__intro {
+    margin-bottom: 1.75rem;
+  }
+
+  &__intro .section-header {
+    margin-bottom: 1rem;
+  }
+
+  &__sync {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    color: $color-muted;
+
+    a {
+      font-weight: 500;
+      color: $color-ink;
+      text-underline-offset: 2px;
+
+      &:hover {
+        color: $color-accent;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+
+    @include mq(md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mq(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__skeleton {
+    height: 20rem;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    background: $color-subtle;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: oklch(75% 0.015 260);
+    box-shadow: $shadow-card;
+
+    .project-card__cover-img {
+      transform: scale(1.03);
+    }
+
+    .schematic__panel {
+      border-color: $color-accent;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 22px;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.625rem;
+  }
+
+  &__tag {
+    font-family: $font-mono;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $color-muted;
+  }
+
+  &__title {
+    margin-bottom: 0.625rem;
+    font-family: $font-display;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: $color-ink;
+  }
+
+  &__tagline {
+    flex: 1;
+    margin-bottom: 1.25rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: $color-ink-subtle;
+  }
+
+  &__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-bottom: 1.25rem;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid $color-border;
+    padding-top: 0.875rem;
+  }
+
+  &__inspect {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.375rem;
+    border: 0;
+    background: none;
+    padding: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $color-ink;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__github,
+  &__year {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    color: $color-muted;
+  }
+
+  &__github:hover {
+    color: $color-accent;
+  }
+
+  &__cover {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    border-bottom: 1px solid $color-border;
+    background: $color-subtle;
+  }
+
+  &__cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+}
+
+.schematic {
+  position: relative;
+  display: flex;
+  height: 180px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px solid $color-border;
+  background: $color-subtle;
+  padding: 1rem;
+
+  &__grid {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, oklch(90% 0.006 85 / 0.4) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(90% 0.006 85 / 0.4) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  &__panel {
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    background: $color-surface;
+    padding: 0.75rem;
+    box-shadow: $shadow-subtle;
+    transition: border-color 0.15s ease;
+
+    &--center {
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__bar {
+    height: 6px;
+    margin-bottom: 0.375rem;
+    border-radius: $radius-sm;
+    background: $color-subtle;
+
+    &--accent {
+      background: $color-accent;
+    }
+
+    &--w40 {
+      width: 40%;
+    }
+
+    &--w75 {
+      width: 75%;
+    }
+
+    &--w30 {
+      width: 30%;
+    }
+
+    &--w55 {
+      width: 55%;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__dots {
+    display: flex;
+    gap: 0.375rem;
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    background: $color-subtle;
+
+    &--on {
+      border-color: $color-accent;
+      background: $color-accent-light;
+    }
+  }
+
+  &__chart {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  &__col {
+    width: 20%;
+    background: $color-border;
+
+    &--mid {
+      height: 60%;
+    }
+
+    &--tall {
+      height: 85%;
+      background: $color-accent;
+    }
+
+    &--short {
+      height: 45%;
+    }
+
+    &--full {
+      height: 100%;
+      border: 1px solid $color-border;
+      background: $color-subtle;
+    }
+  }
+
+  &__buffer {
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    background: $color-subtle;
+    padding: 0.75rem 1rem;
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    color: $color-ink;
+  }
+}

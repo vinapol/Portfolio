@@ -1,0 +1,162 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.philosophy {
+  margin-bottom: 6rem;
+
+  &__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  &__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  &__quote {
+    margin-top: 0.5rem;
+    font-family: $font-display;
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.35;
+    color: $color-ink;
+  }
+
+  &__body {
+    margin-top: 1rem;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: $color-ink-subtle;
+  }
+
+  &__principles {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.625rem;
+
+    @include mq(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__principle {
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    background: $color-surface;
+    padding: 1rem;
+  }
+
+  &__principle-title {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $color-accent;
+  }
+
+  &__principle-body {
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    color: $color-ink-subtle;
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+}
+
+.timeline {
+  position: relative;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  padding: 1.75rem;
+  box-shadow: $shadow-subtle;
+
+  &__title {
+    margin-bottom: 1rem;
+    font-family: $font-display;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: $color-ink;
+  }
+
+  &__list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 7px;
+      width: 1.5px;
+      background: $color-border;
+    }
+  }
+
+  &__item {
+    position: relative;
+    padding-left: 1.75rem;
+  }
+
+  &__dot {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 2px solid $color-border;
+    border-radius: 50%;
+    background: $color-surface;
+
+    &--current {
+      border-color: $color-accent;
+      background: $color-accent-light;
+    }
+  }
+
+  &__heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  &__name {
+    font-weight: 700;
+    color: $color-ink;
+  }
+
+  &__period {
+    font-family: $font-mono;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: $color-muted;
+  }
+
+  &__org {
+    margin-bottom: 0.375rem;
+    font-family: $font-mono;
+    font-size: 0.8rem;
+    color: $color-accent;
+  }
+
+  &__desc {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: $color-ink-subtle;
+  }
+}

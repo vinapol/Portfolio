@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Moïse Techer — Développeur frontend">
+  <rect width="1200" height="630" fill="#faf8f4"/>
+  <rect x="80" y="80" width="56" height="56" rx="6" fill="#fde8e4" stroke="#c23a2b" stroke-width="2"/>
+  <text x="108" y="115" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700" fill="#c23a2b">MT</text>
+  <text x="80" y="280" font-family="Shippori Mincho, serif" font-size="64" font-weight="700" fill="#1a1c24">Moïse Techer</text>
+  <text x="80" y="350" font-family="JetBrains Mono, monospace" font-size="24" fill="#c23a2b">Développeur frontend</text>
+  <text x="80" y="420" font-family="Georgia, serif" font-size="22" fill="#5c6270">Interfaces nettes, accessibles, intemporelles</text>
+</svg>

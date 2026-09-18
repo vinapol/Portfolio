@@ -1,0 +1,25 @@
+@use "variables" as *;
+
+@mixin mq($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $bp-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: $bp-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: $bp-lg) {
+      @content;
+    }
+  }
+}
+
+@mixin font-display {
+  font-family: $font-display;
+}
+
+@mixin font-mono {
+  font-family: $font-mono;
+}
