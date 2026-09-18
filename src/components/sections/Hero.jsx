@@ -3,6 +3,7 @@ import { Chip } from "@/components/ui/Chip";
 import { CropMarks } from "@/components/ui/CropMarks";
 import { SiteWrapper } from "@/components/ui/SiteWrapper";
 import { profile } from "@/data/profile";
+import { asset } from "@/lib/asset";
 import { ChevronDown, MapPin } from "@/components/ui/Icons";
 export function Hero() {
   const [city, region] = profile.location.split(",").map((part) => part.trim());
@@ -45,8 +46,8 @@ export function Hero() {
               <div className="hero__frame">
                 <CropMarks />
                 <img
-                  src="/portrait-640.webp"
-                  srcSet="/portrait-480.webp 480w, /portrait-640.webp 640w, /portrait-864.webp 864w"
+                  src={asset("portrait-640.webp")}
+                  srcSet={`${asset("portrait-480.webp")} 480w, ${asset("portrait-640.webp")} 640w, ${asset("portrait-864.webp")} 864w`}
                   sizes="(min-width: 1024px) 36rem, 92vw"
                   width={640}
                   height={853}

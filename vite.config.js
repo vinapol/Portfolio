@@ -33,7 +33,10 @@ function gzipPreview() {
   };
 }
 
+const base = "/Portfolio/";
+
 export default defineConfig({
+  base,
   plugins: [react(), inlineCss(), gzipPreview()],
   resolve: {
     alias: {

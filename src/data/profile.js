@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 export const profile = {
   firstName: "Moïse",
   lastName: "Techer",
@@ -14,7 +16,7 @@ export const profile = {
     "Je découpe, j'estime, je documente. Même réflexe dans le code : données séparées de l'UI, états d'erreur visibles, lecteurs d'écran traités comme des utilisateurs premiers.",
   ],
   email: "techermoisearhel@gmail.com",
-  cvUrl: "/cv-moise-techer.pdf",
+  cvUrl: asset("cv-moise-techer.pdf"),
   githubHandle: "vinapol",
   linkedinHandle: "moïse-techer",
   links: [

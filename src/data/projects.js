@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 export const projectDetails = {
   "kasa-project": {
     title: "Kasa",
@@ -335,7 +337,7 @@ export function detailsToProject(repoName, details, githubUrl, year) {
     perf: details.perf,
     tests: details.tests,
     snippet: details.snippet,
-    cover: `/projects/${repoName}.webp`,
+    cover: asset(`projects/${repoName}.webp`),
     links: {
       github: githubUrl,
       demo: details.demo,
@@ -369,7 +371,7 @@ export function fallbackProject(
     architecture: language ?? "N/A",
     perf: "N/A",
     tests: "N/A",
-    cover: `/projects/${repoName}.webp`,
+    cover: asset(`projects/${repoName}.webp`),
     links: { github: githubUrl },
   };
 }
