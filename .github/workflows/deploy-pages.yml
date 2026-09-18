@@ -1,3 +1,7 @@
+# Publie UNIQUEMENT le dossier dist/ (bundle Vite hashé).
+# Dans GitHub : Settings → Pages → Source = GitHub Actions
+# (pas « Deploy from a branch » / main / root, sinon le index.html source
+#  et /src/main.jsx sont servis tels quels → page blanche).
 name: Deploy GitHub Pages
 
 on:
@@ -25,6 +29,19 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - name: Vérifier le HTML de production
+        run: |
+          set -euo pipefail
+          test -f dist/index.html
+          if grep -F 'src/main.jsx' dist/index.html; then
+            echo "::error::dist/index.html référence encore src/main.jsx — Pages servirait le source au lieu du bundle."
+            exit 1
+          fi
+          if ! grep -E 'src="\./assets/index-[^"]+\.js"' dist/index.html; then
+            echo "::error::dist/index.html ne référence pas le bundle hashé ./assets/index-*.js"
+            exit 1
+          fi
+          touch dist/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
