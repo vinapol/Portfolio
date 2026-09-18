@@ -18,7 +18,13 @@ function inlineCss() {
           }
         }
         if (!css) return html;
-        return html.replace(/<link rel="stylesheet"[\s\S]*?>/, `<style>${css}</style>`);
+        css = String(css)
+          .replaceAll(/url\((?:\.\.\/)+fonts\//g, "url(fonts/")
+          .replaceAll("url(/fonts/", "url(fonts/");
+        return html.replace(
+          /<link rel="stylesheet"[\s\S]*?>/,
+          `<style>${css}</style>`,
+        );
       },
     },
   };
@@ -33,46 +39,9 @@ function gzipPreview() {
   };
 }
 
-// Pages GitHub sert le site sous /Portfolio/. Le preview Vite sert dist à la racine.
-const base = process.env.GITHUB_ACTIONS ? "/Portfolio/" : "/";
-
-function syncScssBase() {
-  return {
-    name: "sync-scss-asset-base",
-    enforce: "pre",
-    transform(code, id) {
-      if (!id.replace(/\\/g, "/").endsWith("/src/styles/_variables.scss")) {
-        return null;
-      }
-      return {
-        code: code.replace(/\$asset-base:\s*"[^"]*";/, `$asset-base: "${base}";`),
-        map: null,
-      };
-    },
-  };
-}
-
-function prefixPublicUrlsInCss() {
-  return {
-    name: "prefix-public-urls-in-css",
-    apply: "build",
-    generateBundle(_opts, bundle) {
-      if (base === "/") return;
-      const prefix = base.replace(/\/$/, "");
-      for (const item of Object.values(bundle)) {
-        if (item.type !== "asset" || !item.fileName.endsWith(".css")) continue;
-        item.source = String(item.source).replaceAll(
-          "url(/fonts/",
-          `url(${prefix}/fonts/`,
-        );
-      }
-    },
-  };
-}
-
-export default defineConfig({
-  base,
-  plugins: [react(), syncScssBase(), prefixPublicUrlsInCss(), inlineCss(), gzipPreview()],
+export default defineConfig(({ command }) => ({
+  base: command === "build" ? "./" : "/",
+  plugins: [react(), inlineCss(), gzipPreview()],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -86,4 +55,4 @@ export default defineConfig({
     cssMinify: true,
     modulePreload: false,
   },
-});
+}));
