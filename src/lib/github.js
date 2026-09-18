@@ -1,7 +1,7 @@
 export async function fetchGithubRepos(username) {
   const cacheKey = `github-repos:${username}`;
   const cached = readCache(cacheKey);
-  if (cached) return cached;
+  if (cached) return visibleRepos(cached);
   const response = await fetch(
     `https://api.github.com/users/${username}/repos?per_page=100&sort=updated&type=owner`,
     { headers: { Accept: "application/vnd.github+json" } },
@@ -10,9 +10,15 @@ export async function fetchGithubRepos(username) {
     throw new Error(`GitHub API ${response.status}`);
   }
   const payload = await response.json();
-  const repos = payload.filter((repo) => !repo.fork);
+  const repos = visibleRepos(payload);
   writeCache(cacheKey, repos);
   return repos;
+}
+
+function visibleRepos(repos) {
+  return repos.filter(
+    (repo) => !repo.fork && repo.name.toLowerCase() !== "portfolio",
+  );
 }
 const TTL_MS = 30 * 60 * 1000;
 function readCache(key) {
