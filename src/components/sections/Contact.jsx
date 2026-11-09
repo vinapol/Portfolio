@@ -64,6 +64,8 @@ export function Contact() {
                   </a>
                   <span className="contact__sep">·</span>
                   <a href={profile.cvUrl}>Télécharger le CV (PDF)</a>
+                  <span className="contact__sep">·</span>
+                  <a href={profile.offersUrl}>Offres</a>
                 </p>
               </div>
             </div>

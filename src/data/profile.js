@@ -19,6 +19,7 @@ export const profile = {
   cvUrl: asset("cv-moise-techer.pdf"),
   githubHandle: "vinapol",
   linkedinHandle: "moïse-techer",
+  offersUrl: "https://vinapol.github.io/site-offre/",
   links: [
     { id: "github", label: "GitHub", href: "https://github.com/vinapol" },
     {
@@ -27,6 +28,11 @@ export const profile = {
       href: "https://www.linkedin.com/in/mo%C3%AFse-techer-36a168328",
     },
     { id: "email", label: "Email", href: "mailto:techermoisearhel@gmail.com" },
+    {
+      id: "offers",
+      label: "Offres",
+      href: "https://vinapol.github.io/site-offre/",
+    },
   ],
   principles: [
     {

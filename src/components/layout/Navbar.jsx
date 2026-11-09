@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { SiteWrapper } from "@/components/ui/SiteWrapper";
 import { navItems, profile } from "@/data/profile";
+import { asset } from "@/lib/asset";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { Menu, X } from "@/components/ui/Icons";
 import { useState } from "react";
@@ -16,6 +17,13 @@ export function Navbar() {
       <SiteWrapper>
         <div className="navbar__inner">
           <a href="#accueil" className="navbar__brand">
+            <img
+              className="navbar__logo"
+              src={asset("favicon.svg")}
+              width="36"
+              height="36"
+              alt=""
+            />
             <span className="navbar__identity">
               <span className="navbar__name">
                 {profile.firstName} {profile.lastName}
