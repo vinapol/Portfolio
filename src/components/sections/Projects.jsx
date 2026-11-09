@@ -5,29 +5,36 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SiteWrapper } from "@/components/ui/SiteWrapper";
 import { useGithubProjects } from "@/context/github-projects-context";
 import { profile } from "@/data/profile";
+import { useI18n } from "@/i18n";
+import { localizeProject } from "@/lib/locale";
 import { useCallback, useMemo, useState } from "react";
 export function Projects() {
+  const { t, lang } = useI18n();
   const { projects, status } = useGithubProjects();
+  const localized = useMemo(
+    () => projects.map((project) => localizeProject(project, lang)),
+    [projects, lang],
+  );
   const [filter, setFilter] = useState("all");
   const [selected, setSelected] = useState(null);
   const closeModal = useCallback(() => setSelected(null), []);
   const visible = useMemo(
     () =>
       filter === "all"
-        ? projects
-        : projects.filter((project) => project.category === filter),
-    [filter, projects],
+        ? localized
+        : localized.filter((project) => project.category === filter),
+    [filter, localized],
   );
-  const formationCount = projects.filter(
+  const formationCount = localized.filter(
     (p) => p.category === "formation",
   ).length;
-  const personnelCount = projects.filter(
+  const personnelCount = localized.filter(
     (p) => p.category === "personnel",
   ).length;
   const options = [
-    { id: "all", label: `Tous (${projects.length})` },
-    { id: "formation", label: `Formation (${formationCount})` },
-    { id: "personnel", label: `Personnels (${personnelCount})` },
+    { id: "all", label: `${t.filterAll} (${localized.length})` },
+    { id: "formation", label: `${t.filterTraining} (${formationCount})` },
+    { id: "personnel", label: `${t.filterPersonal} (${personnelCount})` },
   ];
   return (
     <section id="projets" aria-labelledby="projets-title" className="projects">
@@ -35,10 +42,10 @@ export function Projects() {
         <div className="text-frame projects__intro">
           <SectionHeader
             id="projets-title"
-            title="Projets & Études de Cas"
+            title={t.projectsTitle}
             actions={
               <FilterBar
-                label="Filtrer les projets"
+                label={t.filterLabel}
                 options={options}
                 value={filter}
                 onChange={setFilter}
@@ -46,7 +53,7 @@ export function Projects() {
             }
           />
           <p className="projects__sync">
-            Liste synchronisée avec{" "}
+            {t.syncLead}{" "}
             <a
               href={`https://github.com/${profile.githubHandle}?tab=repositories`}
               target="_blank"
@@ -54,10 +61,8 @@ export function Projects() {
             >
               github.com/{profile.githubHandle}
             </a>
-            {status === "loading" ? " — chargement…" : null}
-            {status === "error"
-              ? " — GitHub indisponible, affichage du catalogue local."
-              : null}
+            {status === "loading" ? t.loading : null}
+            {status === "error" ? t.syncError : null}
           </p>
         </div>
         {status === "loading" ? (

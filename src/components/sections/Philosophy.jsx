@@ -1,11 +1,10 @@
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SiteWrapper } from "@/components/ui/SiteWrapper";
-import { profile } from "@/data/profile";
-import { timeline } from "@/data/timeline";
-import { skillGroups } from "@/data/skills";
+import { useI18n } from "@/i18n";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
 export function Philosophy() {
+  const { t } = useI18n();
   return (
     <section
       id="philosophie"
@@ -18,18 +17,18 @@ export function Philosophy() {
             <div className="text-frame">
               <SectionHeader
                 id="philosophie-title"
-                title="L'amélioration continue appliquée au code"
+                title={t.philosophyTitle}
                 bordered={false}
               />
-              <p className="philosophy__quote">{profile.philosophyQuote}</p>
-              {profile.philosophyBody.map((paragraph) => (
+              <p className="philosophy__quote">{t.philosophyQuote}</p>
+              {t.philosophyBody.map((paragraph) => (
                 <p key={paragraph.slice(0, 24)} className="philosophy__body">
                   {paragraph}
                 </p>
               ))}
             </div>
             <div className="philosophy__principles">
-              {profile.principles.map((item) => (
+              {t.principles.map((item) => (
                 <article key={item.title} className="philosophy__principle">
                   <p className="philosophy__principle-title">{item.title}</p>
                   <p className="philosophy__principle-body">{item.body}</p>
@@ -37,18 +36,20 @@ export function Philosophy() {
               ))}
             </div>
             <div className="philosophy__chips">
-              {skillGroups.flatMap((group) =>
-                group.items
-                  .slice(0, 4)
-                  .map((item) => <Chip key={item}>{item}</Chip>),
-              )}
+              {[
+                ...t.skills.slice(0, 4),
+                ...t.skills.slice(8, 12),
+                ...t.skills.slice(14, 18),
+              ].map((item) => (
+                <Chip key={item}>{item}</Chip>
+              ))}
             </div>
           </div>
 
           <div id="parcours" className="timeline">
-            <h2 className="timeline__title">Parcours & évolution</h2>
+            <h2 className="timeline__title">{t.timelineTitle}</h2>
             <ol className="timeline__list">
-              {timeline.map((event, index) => (
+              {t.timeline.map((event, index) => (
                 <li key={event.id} className="timeline__item">
                   <span
                     aria-hidden="true"

@@ -3,23 +3,21 @@ import { EmailCopyBox } from "@/components/ui/EmailCopyBox";
 import { SiteWrapper } from "@/components/ui/SiteWrapper";
 import { useToast } from "@/context/toast-context";
 import { profile } from "@/data/profile";
+import { useI18n } from "@/i18n";
 import { useId, useState } from "react";
 const initial = { name: "", email: "", message: "" };
 function validate(values) {
   const errors = {};
-  if (values.name.trim().length < 2) {
-    errors.name = "Indiquez un nom d'au moins 2 caractères.";
-  }
+  if (values.name.trim().length < 2) errors.name = "name";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
-    errors.email = "Indiquez une adresse email valide.";
+    errors.email = "email";
   }
-  if (values.message.trim().length < 20) {
-    errors.message = "Le message doit contenir au moins 20 caractères.";
-  }
+  if (values.message.trim().length < 20) errors.message = "message";
   return errors;
 }
 export function Contact() {
   const { notify } = useToast();
+  const { t } = useI18n();
   const [values, setValues] = useState(initial);
   const [errors, setErrors] = useState({});
   const nameId = useId();
@@ -30,12 +28,12 @@ export function Contact() {
     const nextErrors = validate(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
-    const subject = encodeURIComponent(`Contact portfolio — ${values.name}`);
+    const subject = encodeURIComponent(`${t.contact.subject} — ${values.name}`);
     const body = encodeURIComponent(
       `${values.message}\n\n— ${values.name}\n${values.email}`,
     );
     window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
-    notify("Message préparé. Votre client mail devrait s'ouvrir.");
+    notify(t.contact.prepared);
     setValues(initial);
   };
   return (
@@ -45,27 +43,23 @@ export function Contact() {
           <div className="contact__grid">
             <div>
               <h2 id="contact-title" className="contact__title">
-                Construisons une interface d'exception ensemble.
+                {t.contact.title}
               </h2>
-              <p className="contact__intro">
-                Refonte, design system, accessibilité ou mise en production :
-                écrivez-moi. Le formulaire valide les champs, puis ouvre votre
-                client mail.
-              </p>
+              <p className="contact__intro">{t.contact.intro}</p>
               <div className="contact__channels">
                 <EmailCopyBox email={profile.email} />
                 <p className="contact__social">
                   <a href={profile.links[0]?.href}>
-                    GitHub / @{profile.githubHandle}
+                    {t.contact.github} / @{profile.githubHandle}
                   </a>
                   <span className="contact__sep">·</span>
                   <a href={profile.links[1]?.href}>
-                    LinkedIn / {profile.linkedinHandle}
+                    {t.contact.linkedin} / {profile.linkedinHandle}
                   </a>
                   <span className="contact__sep">·</span>
-                  <a href={profile.cvUrl}>Télécharger le CV (PDF)</a>
+                  <a href={profile.cvUrl}>{t.contact.cv}</a>
                   <span className="contact__sep">·</span>
-                  <a href={profile.offersUrl}>Offres</a>
+                  <a href={profile.offersUrl}>{t.contact.offers}</a>
                 </p>
               </div>
             </div>
@@ -73,38 +67,38 @@ export function Contact() {
             <form noValidate onSubmit={onSubmit} className="contact__form">
               <Field
                 id={nameId}
-                label="Votre nom ou entité"
-                error={errors.name}
+                label={t.contact.name}
+                error={errors.name ? t.contact.nameError : undefined}
                 value={values.name}
-                placeholder="ex. Agence Studio / Marie Dupont"
+                placeholder={t.contact.namePlaceholder}
                 onChange={(value) =>
                   setValues((current) => ({ ...current, name: value }))
                 }
               />
               <Field
                 id={emailId}
-                label="Adresse e-mail de contact"
+                label={t.contact.email}
                 type="email"
-                error={errors.email}
+                error={errors.email ? t.contact.emailError : undefined}
                 value={values.email}
-                placeholder="marie@entreprise.com"
+                placeholder={t.contact.emailPlaceholder}
                 onChange={(value) =>
                   setValues((current) => ({ ...current, email: value }))
                 }
               />
               <Field
                 id={messageId}
-                label="Projet ou besoin"
+                label={t.contact.message}
                 multiline
-                error={errors.message}
+                error={errors.message ? t.contact.messageError : undefined}
                 value={values.message}
-                placeholder="Décrivez succinctement les objectifs ou le calendrier envisagé..."
+                placeholder={t.contact.messagePlaceholder}
                 onChange={(value) =>
                   setValues((current) => ({ ...current, message: value }))
                 }
               />
               <Button type="submit" variant="secondary" className="btn--submit">
-                Transmettre le message
+                {t.contact.submit}
               </Button>
             </form>
           </div>

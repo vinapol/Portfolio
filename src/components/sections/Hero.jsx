@@ -3,10 +3,12 @@ import { Chip } from "@/components/ui/Chip";
 import { CropMarks } from "@/components/ui/CropMarks";
 import { SiteWrapper } from "@/components/ui/SiteWrapper";
 import { profile } from "@/data/profile";
+import { useI18n } from "@/i18n";
 import { asset } from "@/lib/asset";
 import { ChevronDown, MapPin } from "@/components/ui/Icons";
 export function Hero() {
-  const [city, region] = profile.location.split(",").map((part) => part.trim());
+  const { t } = useI18n();
+  const [city, region] = t.location.split(",").map((part) => part.trim());
   return (
     <section id="accueil" aria-labelledby="hero-title" className="hero">
       <SiteWrapper>
@@ -14,9 +16,9 @@ export function Hero() {
           <div className="hero__copy">
             <div className="text-frame">
               <h1 id="hero-title" className="hero__title">
-                {profile.headline}
+                {t.headline}
               </h1>
-              <p className="hero__summary">{profile.summary}</p>
+              <p className="hero__summary">{t.summary}</p>
             </div>
             <div className="hero__ribbon">
               <p className="hero__place">
@@ -35,7 +37,7 @@ export function Hero() {
             </div>
             <div className="hero__cta">
               <ButtonLink href="#projets" variant="primary">
-                Explorer les projets
+                {t.explore}
                 <ChevronDown className="icon icon--14" aria-hidden="true" />
               </ButtonLink>
             </div>
@@ -51,7 +53,7 @@ export function Hero() {
                   sizes="(min-width: 1024px) 36rem, 92vw"
                   width={640}
                   height={853}
-                  alt={`Portrait de ${profile.firstName} ${profile.lastName}`}
+                  alt={t.portraitAlt}
                   className="hero__photo"
                   fetchPriority="high"
                   decoding="async"
@@ -61,7 +63,7 @@ export function Hero() {
                 <span className="hero__caption-name">
                   {profile.firstName} {profile.lastName}
                 </span>
-                <span className="hero__caption-role">{profile.role}</span>
+                <span className="hero__caption-role">{t.role}</span>
               </figcaption>
             </figure>
           </aside>

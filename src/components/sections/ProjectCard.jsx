@@ -1,8 +1,10 @@
 import { Chip } from "@/components/ui/Chip";
 import { ProjectSchematic } from "@/components/ui/ProjectSchematic";
 import { ArrowRight } from "@/components/ui/Icons";
+import { useI18n } from "@/i18n";
 import { useState } from "react";
 export function ProjectCard({ project, onOpen }) {
+  const { t } = useI18n();
   return (
     <article className="project-card">
       <ProjectCover project={project} />
@@ -25,7 +27,7 @@ export function ProjectCard({ project, onOpen }) {
             onClick={() => onOpen(project)}
             className="project-card__inspect"
           >
-            Voir le détail
+            {t.seeDetails}
             <ArrowRight className="icon icon--12" aria-hidden="true" />
           </button>
           <span className="project-card__links">

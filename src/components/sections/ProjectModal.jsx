@@ -1,14 +1,16 @@
 import { GitHubIcon } from "@/components/ui/GitHubIcon";
 import { Modal } from "@/components/ui/Modal";
 import { ExternalLink } from "@/components/ui/Icons";
-const points = [
-  { key: "context", title: "1. Contexte", field: "context" },
-  { key: "objectives", title: "2. Objectifs", field: "objectives" },
-  { key: "stack", title: "3. Stack technique", field: "stack" },
-  { key: "skills", title: "4. Compétences développées", field: "skills" },
-  { key: "results", title: "5. Résultats & impact", field: "results" },
-];
+import { useI18n } from "@/i18n";
 export function ProjectModal({ project, onClose }) {
+  const { t } = useI18n();
+  const points = [
+    { key: "context", title: t.modal.context, field: "context" },
+    { key: "objectives", title: t.modal.objectives, field: "objectives" },
+    { key: "stack", title: t.modal.stack, field: "stack" },
+    { key: "skills", title: t.modal.skills, field: "skills" },
+    { key: "results", title: t.modal.results, field: "results" },
+  ];
   return (
     <Modal
       open={Boolean(project)}
@@ -18,9 +20,9 @@ export function ProjectModal({ project, onClose }) {
       {project ? (
         <div className="study">
           <dl className="study__meta">
-            <Meta label="Architecture" value={project.architecture} />
-            <Meta label="Performance" value={project.perf} />
-            <Meta label="Couverture tests" value={project.tests} />
+            <Meta label={t.modal.architecture} value={project.architecture} />
+            <Meta label={t.modal.performance} value={project.perf} />
+            <Meta label={t.modal.tests} value={project.tests} />
           </dl>
 
           {points.map((point) => {
@@ -50,7 +52,7 @@ export function ProjectModal({ project, onClose }) {
                 className="study__action"
               >
                 <GitHubIcon className="icon icon--16" />
-                Dépôt GitHub
+                {t.modal.repo}
               </a>
             ) : null}
             {project.links.demo ? (
@@ -61,7 +63,7 @@ export function ProjectModal({ project, onClose }) {
                 className="study__action"
               >
                 <ExternalLink className="icon icon--16" aria-hidden="true" />
-                Démo live
+                {t.modal.demo}
               </a>
             ) : null}
           </div>

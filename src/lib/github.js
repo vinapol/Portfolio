@@ -15,10 +15,15 @@ export async function fetchGithubRepos(username) {
   return repos;
 }
 
+const hiddenRepos = new Set(["portfolio", "site-offre", "site offre"]);
+
 function visibleRepos(repos) {
-  return repos.filter(
-    (repo) => !repo.fork && repo.name.toLowerCase() !== "portfolio",
-  );
+  return repos.filter((repo) => !repo.fork && !isHiddenRepo(repo.name));
+}
+
+function isHiddenRepo(name) {
+  const normalized = name.toLowerCase().replaceAll("_", " ").replaceAll("-", " ");
+  return hiddenRepos.has(name.toLowerCase()) || hiddenRepos.has(normalized);
 }
 const TTL_MS = 30 * 60 * 1000;
 function readCache(key) {

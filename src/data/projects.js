@@ -1,4 +1,6 @@
 import { asset } from "@/lib/asset";
+import { splitLocale } from "@/lib/locale";
+import { projectEnglish } from "@/data/project-en";
 
 export const projectDetails = {
   "kasa-project": {
@@ -319,24 +321,26 @@ export const projectDetails = {
   },
 };
 export function detailsToProject(repoName, details, githubUrl, year) {
+  const locales = splitLocale(details, projectEnglish[repoName]);
   return {
     id: repoName,
     title: details.title,
-    tagline: details.tagline,
-    tag: details.tag,
+    tagline: locales.fr.tagline,
+    tag: locales.fr.tag,
     schematic: details.schematic,
     category: details.category,
     year,
-    stack: details.stack,
-    context: details.context,
-    objectives: details.objectives,
-    skills: details.skills,
-    results: details.results,
-    nextSteps: details.nextSteps,
-    architecture: details.architecture,
-    perf: details.perf,
-    tests: details.tests,
+    stack: locales.fr.stack,
+    context: locales.fr.context,
+    objectives: locales.fr.objectives,
+    skills: locales.fr.skills,
+    results: locales.fr.results,
+    nextSteps: locales.fr.nextSteps,
+    architecture: locales.fr.architecture,
+    perf: locales.fr.perf,
+    tests: locales.fr.tests,
     snippet: details.snippet,
+    locales,
     cover: asset(`projects/${repoName}.webp`),
     links: {
       github: githubUrl,
@@ -354,23 +358,42 @@ export function fallbackProject(
 ) {
   const index = repoName.length % schematics.length;
   const title = repoName.replaceAll("_", " ").replaceAll("-", " ");
+  const locales = {
+    fr: {
+      tagline: description ?? `Dépôt GitHub ${repoName}.`,
+      tag: language ?? "GitHub",
+      stack: language ? [language] : ["GitHub"],
+      context: description ?? "Projet public hébergé sur GitHub.",
+      objectives: ["Consulter le dépôt pour le détail des objectifs"],
+      skills: language ? [language] : ["Développement"],
+      results: ["Code source public"],
+      nextSteps: ["Enrichir la fiche depuis le README"],
+      architecture: language ?? "N/A",
+      perf: "N/A",
+      tests: "N/A",
+    },
+    en: {
+      tagline: description ?? `GitHub repository ${repoName}.`,
+      tag: language ?? "GitHub",
+      stack: language ? [language] : ["GitHub"],
+      context: description ?? "Public project hosted on GitHub.",
+      objectives: ["See the repository for the detailed objectives"],
+      skills: language ? [language] : ["Development"],
+      results: ["Public source code"],
+      nextSteps: ["Expand this sheet from the README"],
+      architecture: language ?? "N/A",
+      perf: "N/A",
+      tests: "N/A",
+    },
+  };
   return {
     id: repoName,
     title,
-    tagline: description ?? `Dépôt GitHub ${repoName}.`,
-    tag: language ?? "GitHub",
+    ...locales.fr,
     schematic: schematics[index] ?? "bars",
     category: "personnel",
     year,
-    stack: language ? [language] : ["GitHub"],
-    context: description ?? "Projet public hébergé sur GitHub.",
-    objectives: ["Consulter le dépôt pour le détail des objectifs"],
-    skills: language ? [language] : ["Développement"],
-    results: ["Code source public"],
-    nextSteps: ["Enrichir la fiche depuis le README"],
-    architecture: language ?? "N/A",
-    perf: "N/A",
-    tests: "N/A",
+    locales,
     cover: asset(`projects/${repoName}.webp`),
     links: { github: githubUrl },
   };

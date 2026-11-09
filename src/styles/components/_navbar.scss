@@ -97,10 +97,39 @@
     }
   }
 
-  &__cta {
+  &__lang {
     display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    color: $color-muted;
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+
+    button {
+      min-width: 28px;
+      min-height: 40px;
+      border: 0;
+      background: transparent;
+      padding: 0 2px;
+      color: inherit;
+      cursor: pointer;
+
+      &.is-active {
+        color: $color-ink;
+      }
+    }
+  }
+
+  &__cta {
+    display: none;
     min-height: 40px;
     align-items: center;
+
+    @include mq(lg) {
+      display: inline-flex;
+    }
     border: 1px solid $color-border;
     border-radius: $radius-sm;
     background: $color-surface;

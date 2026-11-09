@@ -1,8 +1,10 @@
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { X } from "@/components/ui/Icons";
+import { useI18n } from "@/i18n";
 import { useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 export function Modal({ open, title, kicker, onClose, children }) {
+  const { t } = useI18n();
   const dialogRef = useRef(null);
   const handleClose = useCallback(() => onClose(), [onClose]);
   useFocusTrap(open, dialogRef, handleClose);
@@ -12,7 +14,7 @@ export function Modal({ open, title, kicker, onClose, children }) {
       <button
         type="button"
         className="modal__backdrop"
-        aria-label="Fermer la fenêtre"
+        aria-label={t.modal.closeWindow}
         onClick={onClose}
       />
       <div
@@ -33,7 +35,7 @@ export function Modal({ open, title, kicker, onClose, children }) {
             type="button"
             onClick={onClose}
             className="modal__close"
-            aria-label="Fermer la modale"
+            aria-label={t.modal.close}
           >
             <X className="icon icon--16" aria-hidden="true" />
           </button>

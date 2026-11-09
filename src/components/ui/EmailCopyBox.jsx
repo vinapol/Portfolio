@@ -1,20 +1,22 @@
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/context/toast-context";
 import { Copy } from "@/components/ui/Icons";
+import { useI18n } from "@/i18n";
 export function EmailCopyBox({ email }) {
   const { notify } = useToast();
+  const { t } = useI18n();
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(email);
-      notify("Adresse e-mail copiée dans le presse-papier !");
+      notify(t.contact.copied);
     } catch {
-      notify(`Sélectionnez : ${email}`);
+      notify(`${t.contact.copyFallback} : ${email}`);
     }
   };
   return (
     <div className="email-box">
       <div>
-        <p className="email-box__label">Courriel direct</p>
+        <p className="email-box__label">{t.contact.mailLabel}</p>
         <p className="email-box__value">{email}</p>
       </div>
       <Button
@@ -24,7 +26,7 @@ export function EmailCopyBox({ email }) {
         className="btn--copy"
       >
         <Copy className="icon icon--14" aria-hidden="true" />
-        Copier
+        {t.contact.copy}
       </Button>
     </div>
   );
